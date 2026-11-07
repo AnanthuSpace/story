@@ -1,0 +1,154 @@
+.section {
+  position: relative;
+  padding: clamp(88px, 12vw, 164px) clamp(22px, 8.3vw, 128px);
+  background: var(--cream);
+  color: var(--burgundy);
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: clamp(50px, 8vw, 104px);
+}
+
+.title {
+  margin: 18px 0 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.2rem, 7.4vw, 7.5rem);
+  font-weight: 450;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
+}
+
+.note {
+  max-width: 245px;
+  margin: 0 0 6px;
+}
+
+.timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 56px);
+}
+
+.rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.railBase,
+.railProgress {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 2px;
+}
+
+.railBase {
+  background: rgb(165 167 155 / 55%);
+}
+
+.railProgress {
+  top: 0;
+  bottom: 0;
+  transform-origin: top;
+  background: var(--sage);
+}
+
+.roles {
+  display: flex;
+  flex-direction: column;
+}
+
+.role {
+  display: grid;
+  grid-template-columns: minmax(145px, 0.32fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 70px);
+  padding: 0 0 clamp(56px, 8vw, 104px);
+}
+
+.date {
+  padding-top: 10px;
+}
+
+.roleContent {
+  position: relative;
+  padding-left: clamp(26px, 4vw, 52px);
+  border-left: 1px solid rgb(89 9 7 / 25%);
+}
+
+.index {
+  display: block;
+  margin-bottom: 13px;
+}
+
+.roleTitle {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.3rem, 5.2vw, 5rem);
+  font-weight: 450;
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+}
+
+.company {
+  margin: 9px 0 22px;
+  font-size: 1.05rem;
+}
+
+.bullets {
+  display: grid;
+  max-width: 700px;
+  gap: 10px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.bullets li {
+  padding-left: 3px;
+}
+
+.bullets li::marker {
+  color: var(--sage);
+}
+
+.more {
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid rgb(89 9 7 / 55%);
+  background: transparent;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .heading {
+    grid-template-columns: 1fr;
+  }
+
+  .note {
+    max-width: 300px;
+    margin-left: 42px;
+  }
+
+  .timeline {
+    grid-template-columns: 14px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .role {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-bottom: 55px;
+  }
+
+  .roleContent {
+    padding-left: 18px;
+  }
+}

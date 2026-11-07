@@ -1,0 +1,23 @@
+.marquee {
+  overflow: hidden;
+  padding: clamp(18px, 3vw, 34px) 0;
+  border-top: 1px solid rgb(89 9 7 / 30%);
+  border-bottom: 1px solid rgb(89 9 7 / 30%);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.copy {
+  flex: 0 0 auto;
+  padding-right: 0.15em;
+  color: var(--burgundy);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.4rem, 5.6vw, 5.2rem);
+  font-style: italic;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}

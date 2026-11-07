@@ -1,0 +1,81 @@
+.visual {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.15;
+  color: var(--burgundy);
+}
+
+.arcs {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: arc-drift 32s linear infinite;
+}
+
+.dots {
+  position: absolute;
+  right: 3%;
+  bottom: 7%;
+  width: 38%;
+  opacity: 0.78;
+}
+
+.badge {
+  position: absolute;
+  top: 2%;
+  right: 4%;
+  width: clamp(82px, 10vw, 128px);
+  overflow: visible;
+  animation: badge-turn 24s linear infinite;
+}
+
+.badge text {
+  fill: var(--burgundy);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 1.4px;
+}
+
+.badge path:not(:first-child) {
+  fill: none;
+  stroke: var(--burgundy);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.2;
+}
+
+.figure,
+.dimension {
+  position: absolute;
+  font-size: 9px;
+}
+
+.figure {
+  top: 18%;
+  left: 1%;
+}
+
+.dimension {
+  right: 2%;
+  bottom: 3%;
+}
+
+@keyframes badge-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes arc-drift {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arcs,
+  .badge {
+    animation: none;
+  }
+}

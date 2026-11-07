@@ -1,0 +1,161 @@
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1fr);
+  gap: clamp(48px, 10vw, 150px);
+  padding: clamp(92px, 13vw, 176px) clamp(22px, 8.3vw, 128px);
+  background: var(--cream);
+  color: var(--burgundy);
+}
+
+.title {
+  margin: 26px 0 25px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.6rem, 8vw, 8rem);
+  font-weight: 450;
+  letter-spacing: -0.075em;
+  line-height: 0.86;
+}
+
+.invitation {
+  max-width: 390px;
+  margin: 0 0 30px;
+  font-size: 1.08rem;
+}
+
+.email {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono), monospace;
+  font-size: clamp(11px, 1.2vw, 14px);
+  overflow-wrap: anywhere;
+}
+
+.email span {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 5px;
+  transition: text-decoration-color 250ms ease;
+}
+
+.email:hover span,
+.email:focus-visible span {
+  text-decoration-color: currentColor;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 9px 2px;
+  border: 0;
+  border-bottom: 1px solid rgb(89 9 7 / 48%);
+  border-radius: 0;
+  background: transparent;
+  color: var(--burgundy);
+  font: inherit;
+}
+
+.field textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+
+.field select {
+  appearance: none;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--burgundy);
+  outline-offset: 3px;
+}
+
+.choices {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choices legend {
+  margin-bottom: 12px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.chip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.chip span {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid rgb(89 9 7 / 50%);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.chip input:checked + span {
+  background: var(--burgundy);
+  color: var(--cream-light);
+}
+
+.chip input:focus-visible + span {
+  outline: 2px solid var(--burgundy);
+  outline-offset: 3px;
+}
+
+.submitRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 2px;
+}
+
+.status {
+  max-width: 300px;
+  margin: 0;
+}
+
+@media (max-width: 850px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}

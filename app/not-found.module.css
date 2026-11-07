@@ -1,0 +1,31 @@
+.page {
+  display: flex;
+  min-height: 82svh;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 150px clamp(22px, 8.3vw, 128px) 90px;
+  color: var(--burgundy);
+}
+
+.page h1 {
+  margin: 24px 0 18px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(4rem, 11vw, 10rem);
+  font-weight: 450;
+  letter-spacing: -0.08em;
+  line-height: 0.84;
+}
+
+.page p {
+  max-width: 430px;
+  margin: 0 0 28px;
+}
+
+.page a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgb(89 9 7 / 55%);
+}

@@ -1,0 +1,149 @@
+.about {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(76px, 10vw, 140px) clamp(22px, 8.3vw, 128px)
+    clamp(86px, 12vw, 160px);
+  background: var(--cream);
+  color: #fff !important;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.location {
+  margin: 0;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 0.32fr);
+  align-items: end;
+  gap: clamp(40px, 8vw, 120px);
+  margin-top: clamp(58px, 9vw, 122px);
+}
+
+.statement {
+  max-width: 950px;
+}
+
+.title {
+  margin: 0 0 clamp(32px, 5vw, 62px);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3rem, 7.3vw, 7.4rem);
+  font-weight: 400;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.summary {
+  max-width: 820px;
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.35rem, 2.3vw, 2.25rem);
+  letter-spacing: -0.025em;
+  line-height: 1.38;
+}
+
+.word {
+  display: inline;
+  margin-right: 0.25em;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border-top: 1px solid currentColor;
+}
+
+.fact {
+  display: grid;
+  min-height: 116px;
+  grid-template-columns: 0.72fr 1fr;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid currentColor;
+}
+
+.factNumber {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.5rem, 6vw, 6.4rem);
+  letter-spacing: -0.08em;
+  line-height: 1;
+}
+
+.factLabel {
+  max-width: 110px;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.education {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 18px;
+  margin-top: clamp(56px, 8vw, 104px);
+  padding-top: 17px;
+  border-top: 1px solid rgb(232 210 181 / 40%);
+}
+
+.education p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+}
+
+.education strong {
+  font-weight: 500;
+}
+
+.index {
+  position: absolute;
+  right: clamp(22px, 5vw, 76px);
+  bottom: 30px;
+}
+
+@media (max-width: 820px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .fact {
+    min-height: 100px;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 14px 10px 14px 0;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .factNumber {
+    font-size: clamp(3rem, 8vw, 5rem);
+  }
+
+  .factLabel {
+    max-width: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .education {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .education p {
+    flex-direction: column;
+    gap: 3px;
+  }
+}
