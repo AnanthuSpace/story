@@ -5,6 +5,11 @@ import { Cursor } from "@/components/ui/Cursor";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import {
+  GITHUB_URL,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
+} from "@/data/links";
 import { profile } from "@/data/profile";
 import "./globals.css";
 
@@ -27,7 +32,7 @@ const jetBrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const siteDescription = `${profile.summary} ${profile.name} — ${profile.role} in ${profile.location}. Contact ${profile.email}.`;
+const siteDescription = profile.metadataDescription;
 
 export const metadata: Metadata = {
   title: `${profile.name} — ${profile.role}`,
@@ -49,6 +54,7 @@ const personSchema = {
   jobTitle: profile.role,
   description: siteDescription,
   email: profile.email,
+  sameAs: [GITHUB_URL, LINKEDIN_URL, INSTAGRAM_URL],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Alappuzha",
