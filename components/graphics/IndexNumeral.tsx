@@ -12,9 +12,9 @@ export function IndexNumeral({
   const style: CSSProperties = outlined
     ? {
         color: "transparent",
-        WebkitTextStroke: "1px var(--burgundy)",
+        WebkitTextStroke: "1px var(--ink)",
       }
-    : { color: "var(--burgundy)" };
+    : { color: "var(--ink)" };
 
   return (
     <span

@@ -3,8 +3,9 @@
   grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1fr);
   gap: clamp(48px, 10vw, 150px);
   padding: clamp(92px, 13vw, 176px) clamp(22px, 8.3vw, 128px);
-  background: var(--cream);
-  color: var(--burgundy);
+  background: var(--accent);
+  color: var(--ink);
+  color-scheme: light;
 }
 
 .title {
@@ -22,6 +23,10 @@
   font-size: 1.08rem;
 }
 
+.availability {
+  margin: 0 0 12px;
+}
+
 .email {
   display: inline-flex;
   min-height: 44px;
@@ -32,28 +37,62 @@
   overflow-wrap: anywhere;
 }
 
+.socials {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.socials a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.socials a:hover,
+.socials a:focus-visible {
+  text-decoration-color: var(--ink);
+}
+
+.socials a .social-link__icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
 .email span {
   text-decoration: underline;
-  text-decoration-color: transparent;
+  text-decoration-color: var(--ink-60);
   text-underline-offset: 5px;
   transition: text-decoration-color 250ms ease;
 }
 
 .email:hover span,
 .email:focus-visible span {
-  text-decoration-color: currentColor;
+  text-decoration-color: var(--ink);
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.field label,
+.choices legend {
+  color: var(--ink);
 }
 
 .field input,
@@ -63,11 +102,16 @@
   min-height: 48px;
   padding: 9px 2px;
   border: 0;
-  border-bottom: 1px solid rgb(89 9 7 / 48%);
+  border-bottom: 1px solid var(--ink-60);
   border-radius: 0;
   background: transparent;
-  color: var(--burgundy);
+  color: var(--ink);
   font: inherit;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-60);
 }
 
 .field textarea {
@@ -82,8 +126,9 @@
 .field input:focus-visible,
 .field select:focus-visible,
 .field textarea:focus-visible {
-  outline: 2px solid var(--burgundy);
-  outline-offset: 3px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: inset 0 0 0 2px var(--paper);
 }
 
 .choices {
@@ -122,7 +167,7 @@
   min-height: 44px;
   align-items: center;
   padding: 8px 14px;
-  border: 1px solid rgb(89 9 7 / 50%);
+  border: 1px solid var(--ink-20);
   border-radius: 999px;
   cursor: pointer;
   transition:
@@ -131,13 +176,19 @@
 }
 
 .chip input:checked + span {
-  background: var(--burgundy);
-  color: var(--cream-light);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .chip input:focus-visible + span {
-  outline: 2px solid var(--burgundy);
-  outline-offset: 3px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: inset 0 0 0 2px var(--paper);
+}
+
+.chip input {
+  accent-color: var(--accent);
 }
 
 .submitRow {
@@ -149,8 +200,126 @@
 }
 
 .status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   max-width: 300px;
   margin: 0;
+  color: var(--ink);
+}
+
+.status > svg {
+  flex: 0 0 auto;
+}
+
+.successIcon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.error {
+  font-weight: 700;
+}
+
+:global(.editorial-button).submitButton {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+:global(.editorial-button).submitButton::before {
+  background: var(--obsidian-soft);
+}
+
+:global(.editorial-button).submitButton:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html[data-red-intensity="balanced"] .section {
+  background: var(--paper);
+}
+
+html[data-red-intensity="balanced"] .form {
+  background: var(--ice-light);
+}
+
+html[data-red-intensity="balanced"] .email:hover span,
+html[data-red-intensity="balanced"] .email:focus-visible span {
+  text-decoration-color: var(--accent);
+}
+
+html[data-red-intensity="balanced"] .chip input:checked + span {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+html[data-red-intensity="subtle"] .section {
+  background: var(--ink);
+  color: var(--paper);
+  color-scheme: dark;
+}
+
+html[data-red-intensity="subtle"] .form {
+  border-color: var(--paper-20);
+  background: transparent;
+  color: var(--paper);
+}
+
+html[data-red-intensity="subtle"] .field label,
+html[data-red-intensity="subtle"] .choices legend {
+  color: var(--paper);
+}
+
+html[data-red-intensity="subtle"] .field input,
+html[data-red-intensity="subtle"] .field select,
+html[data-red-intensity="subtle"] .field textarea {
+  border-bottom-color: var(--paper-20);
+  color: var(--paper);
+}
+
+html[data-red-intensity="subtle"] .field input::placeholder,
+html[data-red-intensity="subtle"] .field textarea::placeholder {
+  color: var(--paper-60);
+}
+
+html[data-red-intensity="subtle"] .chip span {
+  border-color: var(--paper-20);
+}
+
+html[data-red-intensity="subtle"] .chip input:checked + span {
+  border-color: var(--accent);
+  background: var(--obsidian-soft);
+  color: var(--paper);
+}
+
+html[data-red-intensity="subtle"] .status {
+  color: var(--paper);
+}
+
+html[data-red-intensity="subtle"] :global(.editorial-button).submitButton {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+html[data-red-intensity="subtle"] :global(.editorial-button).submitButton::before {
+  background: var(--ink);
+}
+
+html[data-red-intensity="subtle"] :global(.editorial-button).submitButton:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 @media (max-width: 850px) {

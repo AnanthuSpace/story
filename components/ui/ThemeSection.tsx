@@ -5,16 +5,16 @@ import { motion, useReducedMotion } from "framer-motion";
 
 export function ThemeSection({
   children,
-  tone = "cream",
+  tone = "paper",
 }: {
   children: ReactNode;
-  tone?: "cream" | "burgundy" | "sage";
+  tone?: "paper" | "ink" | "ice-dark";
 }) {
   const reduceMotion = useReducedMotion();
   const colors = {
-    cream: { backgroundColor: "var(--cream)", color: "var(--burgundy)" },
-    burgundy: { backgroundColor: "var(--burgundy)", color: "var(--cream-light)" },
-    sage: { backgroundColor: "var(--sage)", color: "var(--burgundy)" },
+    paper: { backgroundColor: "var(--paper)", color: "var(--ink)" },
+    ink: { backgroundColor: "var(--ink)", color: "var(--paper)" },
+    "ice-dark": { backgroundColor: "var(--ice-dark)", color: "var(--ink)" },
   };
 
   return (

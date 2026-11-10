@@ -1,0 +1,280 @@
+.section {
+  position: relative;
+  padding: clamp(88px, 12vw, 164px) clamp(22px, 8.3vw, 128px);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: clamp(48px, 8vw, 100px);
+}
+
+.title {
+  margin: 18px 0 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.2rem, 7.4vw, 7.5rem);
+  font-weight: 450;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(48px, 7vw, 96px);
+}
+
+.education,
+.certifications {
+  min-width: 0;
+}
+
+.columnHeading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--ink-20);
+}
+
+.columnHeading svg {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.columnHeading h3 {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+  font-weight: 450;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.educationCard {
+  position: relative;
+  margin-top: 24px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid var(--ink-20);
+  border-top: 4px solid var(--accent);
+  background: var(--ice-light);
+}
+
+.dates {
+  color: var(--ink-60);
+}
+
+.educationCard h4 {
+  margin: 18px 0 8px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.7rem, 3vw, 2.75rem);
+  font-weight: 450;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.institution {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.subheading {
+  margin: 34px 0 12px;
+}
+
+.coursework {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coursework li,
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 9px;
+  border: 1px solid var(--ink-20);
+}
+
+.coursework li {
+  font-size: 12px;
+  line-height: 1.3;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease;
+}
+
+.coursework li:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.certificationList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.certification {
+  display: grid;
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  padding: 19px 0;
+  border-bottom: 1px solid var(--ink-20);
+  transition: color 200ms ease;
+}
+
+.certification::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  background: var(--accent);
+  content: "";
+  transition: transform 400ms var(--ease-editorial);
+}
+
+.certification:hover::before,
+.certification:focus-within::before,
+.certification:active::before {
+  transform: scaleY(1);
+}
+
+.certification:hover,
+.certification:focus-within,
+.certification:active {
+  color: var(--ink);
+}
+
+html[data-red-intensity="bold"]
+  .certification:focus-within
+  .certificationLink:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--paper);
+}
+
+.number {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 4px;
+  color: var(--ink-60);
+}
+
+.number span {
+  display: inline-block;
+  padding: 1px 3px;
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.certification:hover .number span,
+.certification:focus-within .number span,
+.certification:active .number span {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.certificationContent {
+  min-width: 0;
+}
+
+.certificationLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.certificationLink svg {
+  flex: 0 0 auto;
+  transition:
+    color 180ms ease,
+    transform 250ms ease;
+}
+
+.certificationLink:hover svg,
+.certificationLink:focus-visible svg {
+  color: var(--ink);
+  transform: rotate(45deg);
+}
+
+.certificationTitle {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 450;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.certificationMeta {
+  margin: 6px 0 10px;
+  font-size: 13px;
+  color: var(--ink-60);
+}
+
+.badge {
+  min-height: 26px;
+  font-size: 9px;
+}
+
+html[data-red-intensity="balanced"] .certification::before,
+html[data-red-intensity="subtle"] .certification::before {
+  display: none;
+}
+
+html[data-red-intensity="balanced"] .number span,
+html[data-red-intensity="subtle"] .number span {
+  background: transparent;
+  color: inherit;
+}
+
+html[data-red-intensity="balanced"] .coursework li:hover,
+html[data-red-intensity="subtle"] .coursework li:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html[data-red-intensity="subtle"] .educationCard {
+  border-top-width: 1px;
+  border-top-color: var(--ink-20);
+}
+
+html[data-red-intensity="subtle"] .coursework li:hover {
+  border-color: var(--ink-20);
+  background: transparent;
+  color: inherit;
+}
+
+@media (min-width: 700px) and (max-width: 1023px) {
+  .heading {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .columns {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 699px) {
+  .heading {
+    grid-template-columns: 1fr;
+  }
+}

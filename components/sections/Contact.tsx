@@ -1,15 +1,25 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ArrowUpRight, Mail } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowUpRight,
+  Check,
+  Mail,
+} from "lucide-react";
+import { SocialLinks } from "@/components/ui/SocialLinks";
 import { profile } from "@/data/profile";
+import { RED_INTENSITY } from "@/data/theme";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import styles from "./Contact.module.css";
 
 const projectTypes = ["Web app", "API / backend", "Real-time product", "Other"];
 
 export function Contact() {
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,14 +39,25 @@ export function Contact() {
       message,
     ].join("\n");
 
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setStatus("Your email app should open with the message ready to send.");
+    try {
+      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      setStatus({
+        type: "success",
+        message: "Your email app should open with the message ready to send.",
+      });
+    } catch {
+      setStatus({
+        type: "error",
+        message: "Unable to open your email app. Please use the email link.",
+      });
+    }
   };
 
   return (
     <section
       className={styles.section}
       id="contact"
+      data-cursor-surface={RED_INTENSITY === "bold" ? "red" : undefined}
       aria-labelledby="contact-title"
     >
       <div className={styles.heading}>
@@ -50,11 +71,13 @@ export function Contact() {
           Have an idea that needs thoughtful engineering? Tell me what you have
           in mind.
         </p>
+        <p className={`${styles.availability} eyebrow`}>{profile.availability}</p>
         <a className={styles.email} href={`mailto:${profile.email}`}>
           <Mail size={18} aria-hidden="true" />
           <span>{profile.email}</span>
           <ArrowUpRight size={17} aria-hidden="true" />
         </a>
+        <SocialLinks className={styles.socials} />
       </div>
 
       <form className={styles.form} onSubmit={submit}>
@@ -114,13 +137,26 @@ export function Contact() {
           <textarea id="contact-message" name="message" rows={4} required />
         </div>
         <div className={styles.submitRow}>
-          <button className="editorial-button" type="submit">
+          <button className={`editorial-button ${styles.submitButton}`} type="submit">
             <span>Prepare email</span>
             <ArrowUpRight size={17} aria-hidden="true" />
           </button>
-          <p className={`${styles.status} eyebrow`} role="status" aria-live="polite">
-            {status}
-          </p>
+          {status && (
+            <p
+              className={`${styles.status} ${status.type === "error" ? styles.error : ""}`}
+              role={status.type === "error" ? "alert" : "status"}
+              aria-live={status.type === "error" ? "assertive" : "polite"}
+            >
+              {status.type === "success" ? (
+                <span className={styles.successIcon} aria-hidden="true">
+                  <Check size={14} />
+                </span>
+              ) : (
+                <AlertCircle size={16} aria-hidden="true" />
+              )}
+              <span>{status.message}</span>
+            </p>
+          )}
         </div>
       </form>
     </section>

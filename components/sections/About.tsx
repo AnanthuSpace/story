@@ -1,13 +1,24 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { profile } from "@/data/profile";
 import { experience } from "@/data/experience";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { TechIcon } from "@/components/ui/TechIcon";
 import styles from "./About.module.css";
 
 const summaryWords = profile.summary.split(/\s+/);
+const highlightedTerms = ["production", "real-time", "AWS-based", "AI-assisted"];
+const normalizedHighlightedTerms = new Set(
+  highlightedTerms.map((term) => term.toLowerCase()),
+);
 const wordVariants = {
   hidden: { opacity: 0.18 },
   visible: { opacity: 1, transition: { duration: 0.35 } },
@@ -20,12 +31,12 @@ export function About() {
     target: sectionRef,
     offset: ["start end", "center center"],
   });
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["#E8D2B5", "#590907"],
-  );
-  const color = useTransform(scrollYProgress, [0, 1], ["#590907", "#F4E9D9"]);
+  const backgroundPaper = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const backgroundInk = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const textInk = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const textPaper = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const backgroundColor = useMotionTemplate`color-mix(in srgb, var(--paper) ${backgroundPaper}%, var(--ink) ${backgroundInk}%)`;
+  const color = useMotionTemplate`color-mix(in srgb, var(--ink) ${textInk}%, var(--paper) ${textPaper}%)`;
 
   return (
     <motion.section
@@ -35,7 +46,7 @@ export function About() {
       aria-labelledby="about-title"
       style={
         reduceMotion
-          ? { backgroundColor: "var(--burgundy)", color: "var(--cream-light)" }
+          ? { backgroundColor: "var(--ink)", color: "var(--paper)" }
           : { backgroundColor, color }
       }
     >
@@ -46,9 +57,7 @@ export function About() {
       <div className={styles.content}>
         <div className={styles.statement}>
           <h2 className={styles.title} id="about-title">
-            A practical builder,
-            <br />
-            from idea to launch.
+            {profile.aboutHeadline}
           </h2>
           <motion.p
             className={styles.summary}
@@ -64,7 +73,13 @@ export function About() {
           >
             {summaryWords.map((word, index) => (
               <motion.span
-                className={styles.word}
+                className={`${styles.word} ${
+                  normalizedHighlightedTerms.has(
+                    word.toLowerCase().replace(/[.,;:!?]$/, ""),
+                  )
+                    ? styles.highlightWord
+                    : ""
+                }`}
                 key={`${word}-${index}`}
                 variants={wordVariants}
               >
@@ -72,6 +87,33 @@ export function About() {
               </motion.span>
             ))}
           </motion.p>
+          <div className={styles.pillars} aria-label="Engineering pillars">
+            {profile.pillars.map((pillar) => (
+              <article className={styles.pillar} key={pillar.number}>
+                <motion.span
+                  className={styles.pillarAccent}
+                  initial={reduceMotion ? false : { scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  aria-hidden="true"
+                />
+                <span className={`${styles.pillarNumber} eyebrow`}>
+                  {pillar.number}
+                </span>
+                <h3 className={styles.pillarTitle}>{pillar.title}</h3>
+                <p className={styles.pillarDescription}>{pillar.description}</p>
+                <div className={styles.pillarTech}>
+                  {pillar.technologies.map((technology) => (
+                    <span className={styles.pillarTechItem} key={technology}>
+                      <TechIcon name={technology} size={16} />
+                      {technology}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
         <div className={styles.facts} aria-label="Career at a glance">
           <div className={styles.fact}>
@@ -87,14 +129,6 @@ export function About() {
             <span className={`${styles.factLabel} eyebrow`}>Roles</span>
           </div>
         </div>
-      </div>
-      <div className={styles.education}>
-        <span className="eyebrow">Education</span>
-        <p>
-          <strong>{profile.education.qualification}</strong>
-          <span>{profile.education.institution}</span>
-          <span>{profile.education.dates}</span>
-        </p>
       </div>
       <span className={`${styles.index} eyebrow`}>02 / 04 — Profile</span>
     </motion.section>

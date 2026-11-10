@@ -2,8 +2,10 @@
 
 import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 import { experience } from "@/data/experience";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { TechIcon } from "@/components/ui/TechIcon";
 import styles from "./Experience.module.css";
 
 export function Experience() {
@@ -65,13 +67,60 @@ export function Experience() {
           {sortedExperience.map((role, index) => {
             const expanded = expandedRoles.includes(role.company);
 
+            const isCurrentRole = role.company === "Veevity Technologies LLP";
             return (
               <article className={styles.role} key={role.company}>
                 <span className={`${styles.date} eyebrow`}>{role.dateRange}</span>
                 <div className={styles.roleContent}>
+                  <motion.span
+                    className={styles.node}
+                    initial={reduceMotion ? false : { scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.25 }}
+                    aria-hidden="true"
+                  />
                   <span className={`${styles.index} eyebrow`}>0{index + 1}</span>
                   <h3 className={styles.roleTitle}>{role.title}</h3>
                   <p className={styles.company}>{role.company}</p>
+                  {isCurrentRole && (
+                    <span className={`${styles.current} eyebrow`}>Current</span>
+                  )}
+                  <p className={styles.summary}>{role.summary}</p>
+                  <div className={styles.roleMeta}>
+                    <span className={`${styles.type} eyebrow`}>{role.type}</span>
+                    {role.concurrent && (
+                      <span className={`${styles.concurrent} eyebrow`}>
+                        concurrent
+                      </span>
+                    )}
+                  </div>
+                  <div className={styles.tags} aria-label={`${role.company} technologies`}>
+                    {role.tags.map((tag) => (
+                      <span className={styles.tag} key={tag}>
+                        <TechIcon name={tag} size={16} />
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  {role.clientProjects?.map((project) => (
+                    <a
+                      className={styles.clientProject}
+                      href={project.href}
+                      key={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className={`${styles.clientLabel} eyebrow`}>
+                        {project.label}
+                      </span>
+                      <span className={styles.clientTitle}>{project.title}</span>
+                      <span className={styles.clientDescription}>
+                        {project.description}
+                      </span>
+                      <ExternalLink size={16} aria-hidden="true" />
+                    </a>
+                  ))}
                   <ul className={styles.bullets}>
                     {role.keyBullets.map((bullet) => (
                       <li key={bullet}>{bullet}</li>

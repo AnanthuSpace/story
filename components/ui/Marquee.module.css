@@ -1,8 +1,8 @@
 .marquee {
   overflow: hidden;
   padding: clamp(18px, 3vw, 34px) 0;
-  border-top: 1px solid rgb(89 9 7 / 30%);
-  border-bottom: 1px solid rgb(89 9 7 / 30%);
+  background: var(--accent);
+  color: var(--ink);
 }
 
 .track {
@@ -14,10 +14,17 @@
 .copy {
   flex: 0 0 auto;
   padding-right: 0.15em;
-  color: var(--burgundy);
+  color: var(--ink);
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(2.4rem, 5.6vw, 5.2rem);
   font-style: italic;
   letter-spacing: -0.045em;
   line-height: 1;
+}
+
+html[data-red-intensity="balanced"] .marquee,
+html[data-red-intensity="subtle"] .marquee {
+  border-top: 1px solid var(--ink-20);
+  border-bottom: 1px solid var(--ink-20);
+  background: transparent;
 }

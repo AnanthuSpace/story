@@ -14,8 +14,7 @@ export function ArcComposition({ count = 7, ...props }: ArcCompositionProps) {
         cy="290"
         r={radius}
         fill="none"
-        stroke="var(--burgundy)"
-        strokeOpacity={0.85 - index * 0.07}
+        stroke="var(--ink-60)"
         strokeWidth="1"
       />
     );
@@ -31,11 +30,10 @@ export function ArcComposition({ count = 7, ...props }: ArcCompositionProps) {
       {arcs}
       <path
         d="M360 0v580M0 290h720"
-        stroke="var(--burgundy)"
-        strokeOpacity="0.25"
+        stroke="var(--ink-10)"
         strokeWidth="1"
       />
-      <circle cx="360" cy="290" r="4" fill="var(--burgundy)" />
+      <circle cx="360" cy="290" r="4" fill="var(--accent)" />
     </svg>
   );
 }

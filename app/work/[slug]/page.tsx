@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, ExternalLink } from "lucide-react";
+import { FaGithub } from "react-icons/fa6";
 import { CodeFragment } from "@/components/graphics/CodeFragment";
 import { ProjectCover } from "@/components/graphics/ProjectCover";
+import { RED_INTENSITY } from "@/data/theme";
 import { projects } from "@/data/projects";
 import type { Project } from "@/types";
 import styles from "./case-study.module.css";
@@ -40,20 +42,7 @@ export async function generateMetadata({
 }
 
 function ProjectLinks({ project }: { project: Project }) {
-  const links = [
-    project.liveUrl
-      ? { label: "Live project", href: project.liveUrl }
-      : undefined,
-    project.sourceUrl
-      ? { label: "Source", href: project.sourceUrl }
-      : undefined,
-    project.clientSourceUrl
-      ? { label: "Client source", href: project.clientSourceUrl }
-      : undefined,
-    project.serverSourceUrl
-      ? { label: "Server source", href: project.serverSourceUrl }
-      : undefined,
-  ].filter((link): link is { label: string; href: string } => Boolean(link));
+  const links = project.links;
 
   if (links.length === 0) {
     return <span className={styles.metaValue}>Links to be added</span>;
@@ -62,8 +51,18 @@ function ProjectLinks({ project }: { project: Project }) {
   return (
     <div className={styles.links}>
       {links.map((link) => (
-        <a href={link.href} key={link.label} target="_blank" rel="noreferrer">
-          {link.label} <ArrowUpRight size={14} aria-hidden="true" />
+        <a
+          href={link.href}
+          key={link.label}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {link.kind === "source" ? (
+            <FaGithub size={15} aria-hidden="true" />
+          ) : (
+            <ExternalLink size={14} aria-hidden="true" />
+          )}
+          {link.label}
         </a>
       ))}
     </div>
@@ -83,6 +82,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       <header className={styles.header}>
         <span className="eyebrow">Project / 0{projectIndex + 1}</span>
         <h1 className={styles.title}>{project.title}</h1>
+        <p className={styles.subtitle}>{project.subtitle}</p>
         <p className={styles.lede}>{project.description}</p>
       </header>
 
@@ -98,6 +98,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           <span className={styles.metaValue}>{project.role}</span>
         </div>
         <div className={styles.metaItem}>
+          <span className="eyebrow">Category</span>
+          <span className={`${styles.category} eyebrow`}>{project.category}</span>
+        </div>
+        <div className={styles.metaItem}>
+          <span className="eyebrow">Type</span>
+          <span className={`${styles.category} eyebrow`}>{project.projectType}</span>
+        </div>
+        <div className={styles.metaItem}>
           <span className="eyebrow">Year</span>
           <span className={styles.metaValue}>
             {project.year === "TBD" ? "To be confirmed" : project.year}
@@ -105,9 +113,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
         <div className={styles.metaItem}>
           <span className="eyebrow">Stack</span>
-          <span className={styles.metaValue}>
-            {project.stack.length ? project.stack.slice(0, 5).join(" · ") : "Project stack to be added"}
-          </span>
+          <span className={styles.metaValue}>{project.stack.slice(0, 5).join(" · ")}</span>
         </div>
         <div className={styles.metaItem}>
           <span className="eyebrow">Links</span>
@@ -133,7 +139,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <li key={feature}>
               <span className={`${styles.featureIndex} eyebrow`}>0{index + 1}</span>
               <p>{feature}</p>
-              <ArrowDownRight size={17} aria-hidden="true" />
+              <span className={styles.featureBullet} aria-hidden="true" />
             </li>
           ))}
         </ol>
@@ -164,7 +170,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         />
       </section>
 
-      <Link className={styles.nextProject} href={`/work/${nextProject.slug}`}>
+      <Link
+        className={styles.nextProject}
+        href={`/work/${nextProject.slug}`}
+        data-cursor-surface={RED_INTENSITY === "bold" ? "red" : undefined}
+      >
         <ProjectCover className={styles.nextCover} project={nextProject} />
         <span className={`${styles.nextLabel} eyebrow`}>Next project</span>
         <span className={styles.nextTitle}>{nextProject.title}</span>

@@ -1,7 +1,7 @@
 .section {
   padding: clamp(86px, 12vw, 160px) clamp(22px, 8.3vw, 128px);
-  background: var(--cream);
-  color: var(--burgundy);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .heading {
@@ -27,11 +27,38 @@
 }
 
 .list {
-  border-top: 1px solid rgb(89 9 7 / 50%);
+  border-top: 1px solid var(--ink-60);
 }
 
 .item {
-  border-bottom: 1px solid rgb(89 9 7 / 40%);
+  position: relative;
+  border-bottom: 1px solid var(--ink-20);
+  background: transparent;
+  transition: background-color 200ms ease;
+}
+
+.item::after {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 48px;
+  height: 1px;
+  background: var(--accent);
+  content: "";
+}
+
+.item:hover {
+  background: var(--accent-10);
+}
+
+.item:has(.trigger[aria-expanded="true"])::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: var(--accent);
+  content: "";
 }
 
 .trigger {
@@ -51,6 +78,10 @@
 .number {
   align-self: start;
   padding-top: 24px;
+  width: fit-content;
+  padding-inline: 3px;
+  background: var(--accent);
+  color: var(--ink);
 }
 
 .name {
@@ -60,12 +91,60 @@
   line-height: 1;
 }
 
-.arrow {
-  transition: transform 350ms var(--ease-editorial);
+.iconCircle {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--ink);
 }
 
-.arrowOpen {
-  transform: rotate(45deg);
+.arrow {
+  flex: 0 0 auto;
+}
+
+html[data-red-intensity="balanced"] .item::after,
+html[data-red-intensity="subtle"] .item::after,
+html[data-red-intensity="balanced"] .item:has(.trigger[aria-expanded="true"])::before,
+html[data-red-intensity="subtle"] .item:has(.trigger[aria-expanded="true"])::before {
+  background: var(--ink-20);
+}
+
+html[data-red-intensity="balanced"] .item:hover,
+html[data-red-intensity="subtle"] .item:hover {
+  background: transparent;
+}
+
+html[data-red-intensity="balanced"] .number,
+html[data-red-intensity="subtle"] .number,
+html[data-red-intensity="balanced"] .iconCircle,
+html[data-red-intensity="subtle"] .iconCircle {
+  background: transparent;
+  color: var(--ink);
+}
+
+html[data-red-intensity="balanced"] .item:hover .iconCircle,
+html[data-red-intensity="balanced"] .item:has(.trigger[aria-expanded="true"]) .iconCircle,
+html[data-red-intensity="subtle"] .item:hover .iconCircle,
+html[data-red-intensity="subtle"] .item:has(.trigger[aria-expanded="true"]) .iconCircle {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+html[data-red-intensity="subtle"] .item::after {
+  display: none;
+}
+
+html[data-red-intensity="subtle"] .number {
+  padding-inline: 0;
+}
+
+html[data-red-intensity="subtle"] .iconCircle {
+  width: auto;
+  height: auto;
 }
 
 .content {
@@ -82,7 +161,7 @@
 .caption {
   display: block;
   margin: 0 0 28px 78px;
-  color: rgb(89 9 7 / 70%);
+  color: var(--ink-60);
   font-size: 9px;
 }
 

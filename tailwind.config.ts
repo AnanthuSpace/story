@@ -9,10 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "var(--cream)",
-        burgundy: "var(--burgundy)",
-        sage: "var(--sage)",
-        "cream-light": "var(--cream-light)",
+        ink: "var(--ink)",
+        paper: "var(--paper)",
+        accent: "var(--accent)",
+        "ice-light": "var(--ice-light)",
+        "ice-dark": "var(--ice-dark)",
+        "obsidian-soft": "var(--obsidian-soft)",
       },
       fontFamily: {
         display: ["var(--font-fraunces)", "Georgia", "serif"],

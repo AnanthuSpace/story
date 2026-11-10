@@ -9,11 +9,25 @@
   grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
   padding: 18px clamp(22px, 5vw, 76px);
-  color: var(--burgundy);
+  color: var(--ink);
+}
+
+.scrollProgress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  transform-origin: left center;
+  background: var(--accent);
 }
 
 .header[data-menu-open="true"] {
-  color: var(--cream-light);
+  color: var(--paper);
+}
+
+.header[data-menu-open="true"] .scrollProgress {
+  visibility: hidden;
 }
 
 .brand {
@@ -47,8 +61,21 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--sage);
-  box-shadow: 0 0 0 4px rgb(165 167 155 / 24%);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-20);
+  animation: availability-pulse 2s ease-out infinite;
+}
+
+@keyframes availability-pulse {
+  50% {
+    box-shadow: 0 0 0 7px var(--accent-10);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .availabilityDot {
+    animation: none;
+  }
 }
 
 .menuButton {

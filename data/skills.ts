@@ -21,7 +21,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    category: "Backend",
+    category: "Backend & Real-Time",
     subLabel: "Services & real-time",
     skills: [
       "Node.js",
@@ -34,7 +34,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    category: "Databases",
+    category: "Databases & Caching",
     subLabel: "Data stores",
     skills: ["MongoDB", "PostgreSQL", "Redis"],
   },
@@ -49,17 +49,17 @@ export const skillGroups: SkillGroup[] = [
     skills: ["JWT", "RBAC", "Razorpay", "Stripe", "Firebase"],
   },
   {
-    category: "Architecture",
+    category: "Architecture Patterns",
     subLabel: "Application patterns",
     skills: ["Clean Architecture", "Repository Pattern", "MVC"],
   },
   {
-    category: "Tools",
+    category: "Testing & Tooling",
     subLabel: "Product & development",
     skills: ["Postman", "Git", "GitHub", "VS Code", "Figma", "Sequelize"],
   },
   {
-    category: "AI Dev Tools",
+    category: "AI Development Tools",
     subLabel: "AI-assisted development",
     skills: [
       "Claude Code",

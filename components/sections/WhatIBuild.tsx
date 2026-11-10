@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowDownRight } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { capabilities } from "@/data/capabilities";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import styles from "./WhatIBuild.module.css";
@@ -43,11 +43,13 @@ export function WhatIBuild() {
               >
                 <span className={`${styles.number} eyebrow`}>{capability.number}</span>
                 <span className={styles.name}>{capability.title}</span>
-                <ArrowDownRight
-                  className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ""}`}
-                  size={20}
-                  aria-hidden="true"
-                />
+                <span className={styles.iconCircle} aria-hidden="true">
+                  {isOpen ? (
+                    <Minus className={styles.arrow} size={19} />
+                  ) : (
+                    <Plus className={styles.arrow} size={19} />
+                  )}
+                </span>
               </button>
               <AnimatePresence initial={false}>
                 {isOpen && (

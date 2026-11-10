@@ -3,8 +3,8 @@
   min-height: 100svh;
   overflow: hidden;
   padding: clamp(70px, 8vw, 112px) 0 0;
-  background: var(--sage);
-  color: var(--burgundy);
+  background: var(--ice-dark);
+  color: var(--ink);
 }
 
 .intro {
@@ -47,7 +47,14 @@
   flex: 0 0 100vw;
   align-items: center;
   padding: 150px clamp(36px, 12vw, 180px) 95px;
-  border-right: 1px solid rgb(89 9 7 / 30%);
+  border-right: 1px solid var(--ink-20);
+  background: var(--ice-dark);
+  color: var(--ink);
+}
+
+.panel:nth-child(even) {
+  background: var(--accent);
+  color: var(--ink);
 }
 
 .number {
@@ -59,8 +66,12 @@
   font-size: clamp(10rem, 29vw, 28rem);
   letter-spacing: -0.1em;
   line-height: 0.75;
-  opacity: 0.42;
-  -webkit-text-stroke: 1px var(--burgundy);
+  -webkit-text-stroke: 1px var(--accent);
+}
+
+.panel:nth-child(even) .number {
+  color: transparent;
+  -webkit-text-stroke-color: var(--ink);
 }
 
 .panelContent {
@@ -74,6 +85,10 @@
 }
 
 .skills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15em 0.22em;
   max-width: 980px;
   margin: 0;
   font-family: var(--font-display), Georgia, serif;
@@ -81,6 +96,26 @@
   font-weight: 450;
   letter-spacing: -0.075em;
   line-height: 0.92;
+}
+
+.skill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12em;
+}
+
+.skill svg {
+  flex: 0 0 auto;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.panel:nth-child(even) .skill svg {
+  color: var(--ink);
+}
+
+.panel:nth-child(even) .progress span {
+  background: var(--ink);
 }
 
 .subLabel {
@@ -93,13 +128,38 @@
   bottom: 56px;
   left: clamp(36px, 12vw, 180px);
   height: 1px;
-  background: rgb(89 9 7 / 28%);
+  background: var(--ink-10);
 }
 
 .progress span {
   display: block;
   height: 1px;
-  background: var(--burgundy);
+  background: var(--accent);
+}
+
+html[data-red-intensity="balanced"] .panel:nth-child(even),
+html[data-red-intensity="subtle"] .panel:nth-child(even) {
+  background: var(--ice-dark);
+}
+
+html[data-red-intensity="balanced"] .panel:nth-child(even) .number,
+html[data-red-intensity="subtle"] .panel:nth-child(even) .number {
+  color: transparent;
+  -webkit-text-stroke-color: var(--accent);
+}
+
+html[data-red-intensity="balanced"] .panel:nth-child(even) .skill svg,
+html[data-red-intensity="subtle"] .panel:nth-child(even) .skill svg {
+  color: var(--accent);
+}
+
+html[data-red-intensity="balanced"] .panel:nth-child(even) .progress span,
+html[data-red-intensity="subtle"] .panel:nth-child(even) .progress span {
+  background: var(--accent);
+}
+
+html[data-red-intensity="subtle"] .skill svg {
+  color: currentColor;
 }
 
 .panelCount {
@@ -137,7 +197,7 @@
     flex-basis: auto;
     padding: 64px 8px 64px 0;
     border-right: 0;
-    border-top: 1px solid rgb(89 9 7 / 30%);
+    border-top: 1px solid var(--ink-20);
   }
 
   .number {

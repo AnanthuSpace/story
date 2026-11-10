@@ -36,8 +36,12 @@ export default function WorkIndexPage() {
             </div>
             <div className={styles.details}>
               <h2>{project.title}</h2>
+              <p className={styles.subtitle}>{project.subtitle}</p>
               <p>{project.description}</p>
-              <span className="eyebrow">{project.tags.join(" · ")}</span>
+              <div className={styles.chips}>
+                <span className={`${styles.chip} eyebrow`}>{project.category}</span>
+                <span className={`${styles.chip} eyebrow`}>{project.projectType}</span>
+              </div>
             </div>
             <span className={`${styles.year} eyebrow`}>
               {project.year === "TBD" ? "—" : project.year}

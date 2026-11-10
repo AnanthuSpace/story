@@ -17,9 +17,8 @@ export function CodeFragment({
       className={className}
       aria-hidden="true"
       style={{
-        color: "var(--burgundy)",
+        color: "var(--ink-60)",
         fontFamily: "var(--font-jetbrains-mono)",
-        opacity: 0.34,
         whiteSpace: "pre",
       }}
     >

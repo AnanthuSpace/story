@@ -1,14 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { MenuOverlay } from "@/components/layout/MenuOverlay";
+import { profile } from "@/data/profile";
 import styles from "./Header.module.css";
 
 export function Header() {
   const [time, setTime] = useState("--:--");
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const { scrollYProgress } = useScroll();
+  const scrollProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.3,
+  });
 
   useEffect(() => {
     const updateTime = () => {
@@ -35,6 +43,11 @@ export function Header() {
   return (
     <>
       <header className={styles.header} data-menu-open={menuOpen}>
+        <motion.span
+          className={styles.scrollProgress}
+          style={{ scaleX: scrollProgress }}
+          aria-hidden="true"
+        />
         <a className={styles.brand} href="#top" aria-label="Ananthu Mohan, home">
           A.M
         </a>
@@ -44,7 +57,7 @@ export function Header() {
           </span>
           <span className={`${styles.availability} eyebrow`}>
             <span className={styles.availabilityDot} aria-hidden="true" />
-            Open to conversations
+            <span aria-label={profile.availability}>Available</span>
           </span>
         </div>
         <button

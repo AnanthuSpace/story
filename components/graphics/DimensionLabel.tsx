@@ -9,7 +9,7 @@ export function DimensionLabel({
     <span
       className={className}
       aria-label={`Dimension ${label}`}
-      style={{ fontFamily: "var(--font-jetbrains-mono)", color: "var(--burgundy)" }}
+      style={{ fontFamily: "var(--font-jetbrains-mono)", color: "var(--ink)" }}
     >
       ← {label} →
     </span>

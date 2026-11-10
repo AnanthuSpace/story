@@ -2,7 +2,7 @@
   position: relative;
   display: block;
   aspect-ratio: 1.15;
-  color: var(--burgundy);
+  color: var(--ink);
 }
 
 .arcs {
@@ -27,11 +27,13 @@
   right: 4%;
   width: clamp(82px, 10vw, 128px);
   overflow: visible;
+  border-radius: 50%;
+  background: var(--accent);
   animation: badge-turn 24s linear infinite;
 }
 
 .badge text {
-  fill: var(--burgundy);
+  fill: var(--ink);
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 8px;
   letter-spacing: 1.4px;
@@ -39,10 +41,15 @@
 
 .badge path:not(:first-child) {
   fill: none;
-  stroke: var(--burgundy);
+  stroke: var(--ink);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.2;
+}
+
+html[data-red-intensity="balanced"] .badge,
+html[data-red-intensity="subtle"] .badge {
+  background: transparent;
 }
 
 .figure,

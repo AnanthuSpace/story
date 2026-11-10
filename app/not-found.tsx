@@ -5,7 +5,8 @@ import styles from "./not-found.module.css";
 export default function NotFound() {
   return (
     <main className={styles.page} id="main">
-      <span className="eyebrow">404 — Page not found</span>
+      <span className={styles.code}>404</span>
+      <span className="eyebrow">Page not found</span>
       <h1>
         This page
         <br />

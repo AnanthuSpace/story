@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { GITHUB_URL, LINKEDIN_URL, profile } from "@/data/profile";
+import { ArrowUp } from "lucide-react";
+import { SocialLinks } from "@/components/ui/SocialLinks";
+import { profile } from "@/data/profile";
 import styles from "./Footer.module.css";
 
 export function Footer() {
@@ -29,25 +30,19 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={styles.top}>
         <span className="eyebrow">{profile.location}</span>
-        <a className={`${styles.backTop} eyebrow`} href="#top">
-          Back to top ↑
+        <a
+          className={`${styles.backTop} eyebrow`}
+          href="#top"
+          aria-label="Back to top"
+        >
+          <ArrowUp size={19} aria-hidden="true" />
         </a>
       </div>
       <a className={styles.name} href="#top" aria-label="Ananthu Mohan, back to top">
-        ANANTHU MOHAN
+        ANANTHU MOHAN<span>.</span>
       </a>
       <div className={styles.bottom}>
-        <div className={styles.socials}>
-          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">
-            LinkedIn <ArrowUpRight size={14} aria-hidden="true" />
-          </a>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-            GitHub <ArrowUpRight size={14} aria-hidden="true" />
-          </a>
-          <a href={`mailto:${profile.email}`}>
-            Email <ArrowUpRight size={14} aria-hidden="true" />
-          </a>
-        </div>
+        <SocialLinks className={styles.socials} />
         <span className="eyebrow">Alappuzha · {time} IST</span>
         <span className="eyebrow">© {new Date().getFullYear()} · {profile.name}</span>
       </div>

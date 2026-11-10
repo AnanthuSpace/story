@@ -3,28 +3,31 @@
 import { useEffect, useRef } from "react";
 import { skillGroups } from "@/data/skills";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { TechIcon } from "@/components/ui/TechIcon";
 import styles from "./Stack.module.css";
 
 const stackCategories = [
   "Languages",
   "Frontend",
-  "Backend",
-  "Databases",
+  "Backend & Real-Time",
+  "Databases & Caching",
   "Cloud & DevOps",
   "Auth & Payments",
-  "Architecture",
-  "AI Dev Tools",
+  "Architecture Patterns",
+  "Testing & Tooling",
+  "AI Development Tools",
 ] as const;
 
 const panelCopy: Record<(typeof stackCategories)[number], string> = {
   Languages: "Typed foundations",
   Frontend: "Interfaces & state",
-  Backend: "Services & realtime",
-  Databases: "Persistence & cache",
+  "Backend & Real-Time": "Services & realtime",
+  "Databases & Caching": "Persistence & cache",
   "Cloud & DevOps": "Deploy & operate",
   "Auth & Payments": "Identity & billing",
-  Architecture: "Patterns & structure",
-  "AI Dev Tools": "Assisted workflow",
+  "Architecture Patterns": "Patterns & structure",
+  "Testing & Tooling": "Quality & workflow",
+  "AI Development Tools": "Assisted workflow",
 };
 
 export function Stack() {
@@ -122,7 +125,14 @@ export function Stack() {
                 </span>
                 <div className={styles.panelContent}>
                   <p className={`${styles.category} eyebrow`}>{category}</p>
-                  <h3 className={styles.skills}>{group.skills.join(" · ")}</h3>
+                  <h3 className={styles.skills}>
+                    {group.skills.map((skill) => (
+                      <span className={styles.skill} key={skill}>
+                        <TechIcon name={skill} size={26} />
+                        {skill}
+                      </span>
+                    ))}
+                  </h3>
                   <p className={`${styles.subLabel} eyebrow`}>{panelCopy[category]}</p>
                 </div>
                 <div className={styles.progress} aria-hidden="true">

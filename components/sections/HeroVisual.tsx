@@ -1,5 +1,6 @@
 import { ArcComposition } from "@/components/graphics/ArcComposition";
 import { DotMatrix } from "@/components/graphics/DotMatrix";
+import { RED_INTENSITY } from "@/data/theme";
 import styles from "./HeroVisual.module.css";
 
 export type HeroVisualProps = {
@@ -11,7 +12,11 @@ export function HeroVisual({ className }: HeroVisualProps) {
     <div className={className ?? styles.visual} aria-hidden="true">
       <ArcComposition className={styles.arcs} />
       <DotMatrix className={styles.dots} columns={9} rows={7} />
-      <svg className={styles.badge} viewBox="0 0 120 120">
+      <svg
+        className={styles.badge}
+        viewBox="0 0 120 120"
+        data-cursor-surface={RED_INTENSITY === "bold" ? "red" : undefined}
+      >
         <defs>
           <path
             id="hero-badge-path"

@@ -26,7 +26,7 @@ export function GridLines({
       aria-hidden="true"
       {...props}
     >
-      <g stroke="var(--burgundy)" strokeOpacity="0.22" strokeWidth="1">
+      <g stroke="var(--ink-20)" strokeWidth="1">
         {verticalLines}
         {horizontalLines}
       </g>

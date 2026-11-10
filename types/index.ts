@@ -65,15 +65,10 @@ export type Project = {
 export type SkillCategory =
   | "Languages"
   | "Frontend"
-  | "Backend"
-  | "Databases"
-  | "Cloud & DevOps"
-  | "Auth & Payments"
-  | "Architecture"
-  | "Tools"
-  | "AI Dev Tools"
   | "Backend & Real-Time"
   | "Databases & Caching"
+  | "Cloud & DevOps"
+  | "Auth & Payments"
   | "Architecture Patterns"
   | "Testing & Tooling"
   | "AI Development Tools";

@@ -27,7 +27,10 @@ export function ProjectCard({
     >
       <span className="eyebrow project-row__index">0{index}</span>
       <h3 className="project-row__name">{project.title}</h3>
-      <span className="eyebrow project-row__tags">{project.tags.join(" · ")}</span>
+      <span className="eyebrow project-row__tags">
+        <span className="project-row__chip">{project.category}</span>
+        <span className="project-row__chip">{project.projectType}</span>
+      </span>
       <span className="project-row__cover" aria-hidden="true">
         <ProjectCover project={project} />
       </span>

@@ -12,7 +12,7 @@ export function Crosshair(props: SVGProps<SVGSVGElement>) {
     >
       <path
         d="M12 2v20M2 12h20"
-        stroke="var(--burgundy)"
+        stroke="var(--ink)"
         strokeWidth="1"
         vectorEffect="non-scaling-stroke"
       />
@@ -20,7 +20,7 @@ export function Crosshair(props: SVGProps<SVGSVGElement>) {
         cx="12"
         cy="12"
         r="2.5"
-        stroke="var(--burgundy)"
+        stroke="var(--ink)"
         strokeWidth="1"
         vectorEffect="non-scaling-stroke"
       />

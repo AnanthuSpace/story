@@ -6,8 +6,8 @@
   flex-direction: column;
   overflow: auto;
   padding: 118px clamp(24px, 10vw, 160px) 34px;
-  background: var(--burgundy);
-  color: var(--cream-light);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .topline {
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  color: var(--cream-light);
+  color: var(--paper);
 }
 
 .nav {
@@ -25,28 +25,67 @@
 }
 
 .link {
+  position: relative;
   display: grid;
   min-height: clamp(82px, 13vh, 132px);
   grid-template-columns: 54px 1fr 20px;
   align-items: center;
   gap: clamp(12px, 2vw, 26px);
-  border-bottom: 1px solid rgb(232 210 181 / 30%);
+  border-bottom: 1px solid var(--paper-20);
   transition: color 250ms ease;
 }
 
+.link::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  transform: scaleY(0);
+  transform-origin: center;
+  background: var(--accent);
+  content: "";
+  transition: transform 350ms var(--ease-editorial);
+}
+
+.link::after {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  left: 54px;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--accent);
+  content: "";
+  transition: transform 350ms var(--ease-editorial);
+}
+
 .link:first-child {
-  border-top: 1px solid rgb(232 210 181 / 30%);
+  border-top: 1px solid var(--paper-20);
 }
 
 .link:hover,
 .link:focus-visible {
-  color: var(--sage);
+  color: var(--accent);
+}
+
+.link:hover::before,
+.link:focus-visible::before,
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleY(1);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .number {
   align-self: start;
   padding-top: clamp(20px, 3.2vh, 34px);
-  color: var(--cream-light);
+  color: var(--paper);
 }
 
 .label {
@@ -55,6 +94,11 @@
   font-weight: 400;
   letter-spacing: -0.065em;
   line-height: 0.98;
+}
+
+.link:hover .label,
+.link:focus-visible .label {
+  color: var(--accent);
 }
 
 .rule {
@@ -70,11 +114,58 @@
 .link:hover .rule,
 .link:focus-visible .rule {
   transform: scale(1.35);
-  background: currentColor;
+  border-color: var(--accent);
+  background: var(--accent);
 }
 
 .footer {
-  color: var(--cream-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  color: var(--paper);
+}
+
+.availability {
+  margin: 0;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.socials a {
+  display: inline-flex;
+  width: 40px;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 50%;
+  font-size: 13px;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.socials a span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.socials a:hover,
+.socials a:focus-visible {
+  background: var(--accent);
+  color: var(--ink);
 }
 
 @media (max-width: 600px) {
@@ -89,6 +180,11 @@
   .link {
     min-height: 88px;
     grid-template-columns: 34px 1fr 16px;
+  }
+
+  .link::after {
+    right: 16px;
+    left: 34px;
   }
 
   .label {

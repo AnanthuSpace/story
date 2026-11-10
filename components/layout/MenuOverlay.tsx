@@ -2,10 +2,12 @@
 
 import { useEffect } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { SocialLinks } from "@/components/ui/SocialLinks";
+import { profile } from "@/data/profile";
 import styles from "./MenuOverlay.module.css";
 
 const links = [
-  { number: "01", label: "Work", href: "#selected-work" },
+  { number: "01", label: "Personal Projects", href: "#selected-work" },
   { number: "02", label: "About", href: "#about" },
   { number: "03", label: "Experience", href: "#experience" },
   { number: "04", label: "Contact", href: "#contact" },
@@ -76,7 +78,10 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
               </motion.a>
             ))}
           </nav>
-          <p className={`${styles.footer} eyebrow`}>Choose a page to explore</p>
+          <div className={styles.footer}>
+            <p className={`${styles.availability} eyebrow`}>{profile.availability}</p>
+            <SocialLinks className={styles.socials} />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

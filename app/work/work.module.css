@@ -2,7 +2,7 @@
   min-height: 100svh;
   padding: clamp(140px, 18vh, 220px) clamp(22px, 8.3vw, 128px)
     clamp(90px, 13vw, 170px);
-  color: var(--burgundy);
+  color: var(--ink);
 }
 
 .header {
@@ -32,37 +32,90 @@
 }
 
 .list {
-  border-top: 1px solid rgb(89 9 7 / 50%);
+  border-top: 1px solid var(--ink-60);
 }
 
 .project {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: 42px minmax(100px, 0.7fr) minmax(0, 3fr) 70px;
   align-items: center;
   gap: clamp(14px, 3vw, 42px);
   padding: clamp(22px, 3.5vw, 42px) 0;
-  border-bottom: 1px solid rgb(89 9 7 / 35%);
+  border-bottom: 1px solid var(--ink-20);
+  transition: color 250ms ease;
+}
+
+.project::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  background: var(--accent);
+  content: "";
+  transition: transform 450ms var(--ease-editorial);
+}
+
+.project > * {
+  position: relative;
+  z-index: 1;
+}
+
+.project:hover,
+.project:focus-visible,
+.project:active {
+  color: var(--ink);
+}
+
+html[data-red-intensity="bold"] .project:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--paper);
+}
+
+.project:hover::before,
+.project:focus-visible::before,
+.project:active::before {
+  transform: scaleY(1);
 }
 
 .number {
   align-self: start;
+  width: fit-content;
   padding-top: 4px;
+  padding-inline: 3px;
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.project:hover .number,
+.project:focus-visible .number,
+.project:active .number {
+  color: var(--ink);
 }
 
 .cover {
   overflow: hidden;
-  border: 1px solid rgb(89 9 7 / 30%);
+  border: 1px solid var(--ink-20);
 }
 
 .cover svg {
   display: block;
   width: 100%;
-  transition: transform 650ms var(--ease-editorial);
+  transition:
+    transform 650ms var(--ease-editorial),
+    opacity 250ms ease;
 }
 
 .project:hover .cover svg,
 .project:focus-visible .cover svg {
   transform: scale(1.035);
+}
+
+.project:hover .cover svg,
+.project:focus-visible .cover svg,
+.project:active .cover svg {
+  opacity: 0;
 }
 
 .details h2 {
@@ -79,11 +132,97 @@
   margin: 12px 0;
 }
 
+.details .subtitle {
+  margin: 8px 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.chip {
+  display: inline-flex;
+  min-height: 25px;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid var(--ink-20);
+}
+
+.chip:first-child {
+  background: var(--ice-light);
+}
+
+.chip:last-child {
+  border-color: var(--ink);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.project:hover .chip:first-child,
+.project:focus-visible .chip:first-child,
+.project:active .chip:first-child {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.project:hover .chip:last-child,
+.project:focus-visible .chip:last-child,
+.project:active .chip:last-child {
+  background: var(--ink);
+  color: var(--paper);
+}
+
 .year {
   display: inline-flex;
   align-items: center;
   justify-self: end;
   gap: 5px;
+}
+
+.year svg {
+  transition: transform 350ms var(--ease-editorial);
+}
+
+.project:hover .year svg,
+.project:focus-visible .year svg,
+.project:active .year svg {
+  transform: rotate(45deg);
+}
+
+html[data-red-intensity="balanced"] .project::before,
+html[data-red-intensity="subtle"] .project::before {
+  display: none;
+}
+
+html[data-red-intensity="subtle"] .number,
+html[data-red-intensity="subtle"] .chip:last-child {
+  background: transparent;
+}
+
+html[data-red-intensity="balanced"] .project:hover,
+html[data-red-intensity="balanced"] .project:focus-visible,
+html[data-red-intensity="balanced"] .project:active,
+html[data-red-intensity="subtle"] .project:hover,
+html[data-red-intensity="subtle"] .project:focus-visible,
+html[data-red-intensity="subtle"] .project:active {
+  color: inherit;
+}
+
+html[data-red-intensity="subtle"] .number {
+  background: transparent;
+  color: inherit;
+}
+
+html[data-red-intensity="subtle"] .project:hover .number,
+html[data-red-intensity="subtle"] .project:focus-visible .number,
+html[data-red-intensity="subtle"] .project:active .number {
+  color: inherit;
 }
 
 @media (max-width: 650px) {

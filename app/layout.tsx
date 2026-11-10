@@ -11,6 +11,7 @@ import {
   LINKEDIN_URL,
 } from "@/data/links";
 import { profile } from "@/data/profile";
+import { RED_INTENSITY } from "@/data/theme";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -64,7 +65,7 @@ const personSchema = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#E8D2B5",
+  themeColor: "#DFE5EB",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html
       lang="en"
       className={`${fraunces.variable} ${interTight.variable} ${jetBrainsMono.variable}`}
+      data-red-intensity={RED_INTENSITY}
     >
       <body>
         <script
