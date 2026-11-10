@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import Image from "next/image";
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import { profile } from "@/data/profile";
 import styles from "./Footer.module.css";
@@ -37,6 +38,22 @@ export function Footer() {
         >
           <ArrowUp size={19} aria-hidden="true" />
         </a>
+      </div>
+      <div className={styles.brandLine}>
+        <picture className={styles.brandPicture}>
+          <source
+            media="(max-width: 600px)"
+            srcSet="/brand/logo-final-dark.svg"
+          />
+          <Image
+            className={styles.brandImage}
+            src="/brand/logo-lockup-dark.svg"
+            alt="Ananthu Mohan, Software Engineer"
+            width={1370}
+            height={360}
+            unoptimized
+          />
+        </picture>
       </div>
       <a className={styles.name} href="#top" aria-label="Ananthu Mohan, back to top">
         ANANTHU MOHAN<span>.</span>

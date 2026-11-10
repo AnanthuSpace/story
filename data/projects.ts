@@ -6,10 +6,10 @@ export const projects: Project[] = [
     title: "Paradox Esports",
     subtitle: "Esports Organization Platform",
     category: "Frontend",
-    projectType: "PERSONAL",
-    tags: ["PERSONAL"],
+    projectType: "CLIENT",
+    tags: ["CLIENT"],
     year: "TBD",
-    role: "Personal project · Full Stack Developer",
+    role: "Client project · Full Stack Developer",
     description:
       "A multi-page esports organization platform for teams, player profiles, recruitment and sponsorship enquiries.",
     overview:

@@ -47,7 +47,7 @@ export type Project = {
   title: string;
   subtitle: string;
   category: string;
-  projectType: "PERSONAL";
+  projectType: "PERSONAL" | "CLIENT";
   tags: string[];
   year: string;
   role: string;

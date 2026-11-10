@@ -55,6 +55,30 @@ html:not([data-red-intensity="subtle"]) .backTop:focus-visible {
   color: var(--accent);
 }
 
+.brandLine {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.brandPicture {
+  display: block;
+}
+
+.brandImage {
+  display: block;
+  width: min(100%, 520px);
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  .brandImage {
+    width: 64px;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+}
+
 .bottom {
   padding-top: 17px;
   border-top: 1px solid var(--paper-10);

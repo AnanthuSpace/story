@@ -8,6 +8,11 @@
   color: var(--ink);
 }
 
+.logo {
+  align-self: center;
+  margin-bottom: 28px;
+}
+
 .code {
   width: fit-content;
   color: var(--accent);

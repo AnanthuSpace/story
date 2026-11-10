@@ -3,11 +3,12 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { SocialLinks } from "@/components/ui/SocialLinks";
+import { Logo } from "@/components/brand/Logo";
 import { profile } from "@/data/profile";
 import styles from "./MenuOverlay.module.css";
 
 const links = [
-  { number: "01", label: "Personal Projects", href: "#selected-work" },
+  { number: "01", label: "Selected Projects", href: "#selected-work" },
   { number: "02", label: "About", href: "#about" },
   { number: "03", label: "Experience", href: "#experience" },
   { number: "04", label: "Contact", href: "#contact" },
@@ -53,10 +54,22 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
           exit={reduceMotion ? undefined : { clipPath: "inset(0 0 100% 0)" }}
           transition={{ duration: reduceMotion ? 0 : 0.75, ease: [0.76, 0, 0.24, 1] }}
         >
-          <div className={styles.topline}>
-            <span className="eyebrow">Navigation index</span>
+          {/* <div className={styles.topline}>
+            <a
+              className={styles.menuBrand}
+              href="/"
+              aria-label="Ananthu Mohan, home"
+              onClick={onClose}
+            >
+              <Logo
+                variant="lockup"
+                tone="on-dark"
+                size={56}
+                ariaHidden
+              />
+            </a>
             <span className="eyebrow">Alappuzha · India</span>
-          </div>
+          </div> */}
           <nav className={styles.nav} aria-label="Main navigation">
             {links.map((link, index) => (
               <motion.a

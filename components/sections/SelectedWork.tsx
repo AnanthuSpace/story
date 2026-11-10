@@ -26,16 +26,16 @@ export function SelectedWork() {
     >
       <div className="selected-work__heading">
         <div>
-          <SectionLabel number="01" label="Personal Projects" />
+          <SectionLabel number="01" label="Selected Projects" />
           <h2 className="selected-work__title" id="selected-work-title">
-            Personal
+            Selected
             <br />
             projects.
           </h2>
         </div>
         <p className="selected-work__note">
-          A few personal builds. 15+ projects contributed across work,
-          freelance and personal.
+          A selection of personal and client projects. 15+ projects contributed
+          across work, freelance and personal.
         </p>
       </div>
 

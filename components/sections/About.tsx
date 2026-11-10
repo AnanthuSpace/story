@@ -15,7 +15,7 @@ import { TechIcon } from "@/components/ui/TechIcon";
 import styles from "./About.module.css";
 
 const summaryWords = profile.summary.split(/\s+/);
-const highlightedTerms = ["production", "real-time", "AWS-based", "AI-assisted"];
+const highlightedTerms = ["production", "real", "time", "AWS", "based", "AI", "assisted"];
 const normalizedHighlightedTerms = new Set(
   highlightedTerms.map((term) => term.toLowerCase()),
 );

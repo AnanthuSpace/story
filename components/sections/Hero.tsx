@@ -12,18 +12,17 @@ import styles from "./Hero.module.css";
 
 const lines = [
   [
-    { text: "Full", kind: "plain" },
-    { text: "Stack", kind: "plain" },
+    { text: "Software", kind: "plain" },
+    { text: "engineer", kind: "plain" },
   ],
   [
-    { text: "developer", kind: "plain" },
     { text: "building", kind: "plain" },
+    { text: "products", kind: "outline" },
   ],
   [
-    { text: "products", kind: "outline" },
     { text: "that", kind: "plain" },
+    { text: "scale", kind: "italic" },
   ],
-  [{ text: "scale", kind: "italic" }],
 ];
 
 export function Hero() {

@@ -18,6 +18,16 @@
   color: var(--paper);
 }
 
+.menuBrand {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.menuBrand svg {
+  width: min(100%, 213px);
+}
+
 .nav {
   width: min(100%, 1120px);
   margin: auto;
