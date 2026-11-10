@@ -1,10 +1,12 @@
 .section {
+  --container-pad: clamp(22px, 8.3vw, 128px);
   position: relative;
-  min-height: 100svh;
-  overflow: hidden;
-  padding: clamp(70px, 8vw, 112px) 0 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
   background: var(--ice-dark);
   color: var(--ink);
+  touch-action: pan-y;
 }
 
 .intro {
@@ -29,21 +31,23 @@
 }
 
 .viewport {
-  min-height: calc(100svh - 70px);
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overflow: clip;
 }
 
 .track {
   display: flex;
   width: max-content;
-  min-height: calc(100svh - 70px);
+  height: 100%;
+  will-change: auto;
 }
 
 .panel {
   position: relative;
   display: flex;
   width: 100vw;
-  min-height: calc(100svh - 70px);
+  height: 100%;
   flex: 0 0 100vw;
   align-items: center;
   padding: 150px clamp(36px, 12vw, 180px) 95px;
@@ -77,6 +81,7 @@
 .panelContent {
   position: relative;
   z-index: 1;
+  min-width: 0;
   max-width: 1000px;
 }
 
@@ -86,22 +91,25 @@
 
 .skills {
   display: flex;
+  max-width: 980px;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.15em 0.22em;
-  max-width: 980px;
   margin: 0;
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(4rem, 9.5vw, 10rem);
   font-weight: 450;
   letter-spacing: -0.075em;
   line-height: 0.92;
+  overflow-wrap: anywhere;
 }
 
 .skill {
   display: inline-flex;
+  min-width: 0;
   align-items: center;
   gap: 0.12em;
+  overflow-wrap: anywhere;
 }
 
 .skill svg {
@@ -168,10 +176,240 @@ html[data-red-intensity="subtle"] .skill svg {
   bottom: 26px;
 }
 
-@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+.mobileAids {
+  position: absolute;
+  z-index: 3;
+  right: var(--container-pad);
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  left: var(--container-pad);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.hint {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.scrollProgress {
+  display: flex;
+  width: min(100%, 220px);
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.scrollProgressTrack {
+  display: block;
+  height: 2px;
+  flex: 1 1 auto;
+  overflow: hidden;
+  background: var(--ink-20);
+}
+
+.scrollProgressTrack > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.scrollCounter {
+  min-width: 5.2em;
+  color: var(--ink);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-align: right;
+}
+
+@media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
+  .intro {
+    top: calc(var(--header-h) + 1rem + env(safe-area-inset-top, 0px));
+    left: var(--container-pad);
+    width: calc(100% - 2 * var(--container-pad));
+  }
+
+  .title {
+    margin: 0 0 8px;
+    font-size: clamp(2rem, 6svh, 2.8rem);
+    line-height: 0.9;
+  }
+
+  .note {
+    max-width: 240px;
+    margin: 0;
+    font-size: clamp(0.75rem, 1.8svh, 0.875rem);
+    line-height: 1.35;
+  }
+
+  .viewport {
+    overflow: clip;
+  }
+
+  .track {
+    gap: clamp(1rem, 4vw, 2rem);
+    padding-inline: var(--container-pad);
+  }
+
+  .panel {
+    width: calc(100vw - 2 * var(--container-pad));
+    flex-basis: calc(100vw - 2 * var(--container-pad));
+    padding:
+      calc(
+        var(--header-h) + 1rem + clamp(3rem, 17svh, 6rem) +
+          env(safe-area-inset-top, 0px)
+      )
+      clamp(16px, 5vw, 28px)
+      calc(4rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--ink-20);
+    border-right: 0;
+  }
+
+  .panel .progress,
+  .panelCount {
+    display: none;
+  }
+
+  .number {
+    top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 8px);
+    right: 5%;
+    font-size: clamp(5rem, 28vw, 14rem);
+  }
+
+  .panelContent {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .category {
+    margin-bottom: clamp(8px, 1.8svh, 14px);
+  }
+
+  .skills {
+    gap: clamp(0.3rem, 1.2svh, 0.65rem) clamp(0.5rem, 2vw, 0.9rem);
+    font-size: clamp(1.4rem, 6vw, 2.5rem);
+    line-height: 0.98;
+  }
+
+  .denseSkills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    column-gap: clamp(8px, 2vw, 16px);
+    row-gap: clamp(5px, 1svh, 9px);
+  }
+
+  .denseSkills .skill {
+    min-width: 0;
+    font-size: clamp(1.05rem, 3.8svh, 1.65rem);
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+
+  .skill {
+    max-width: 100%;
+    font-size: clamp(1.4rem, 6vw, 2.5rem);
+    overflow-wrap: anywhere;
+  }
+
+  .skill svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .denseSkills .skill svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .subLabel {
+    margin-top: clamp(10px, 2svh, 18px);
+  }
+
+  .progress {
+    right: clamp(16px, 5vw, 28px);
+    bottom: calc(36px + env(safe-area-inset-bottom, 0px));
+    left: clamp(16px, 5vw, 28px);
+  }
+
+  .panelCount {
+    right: clamp(16px, 5vw, 28px);
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mobileAids {
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hint {
+    display: flex;
+    font-size: clamp(8px, 1.55svh, 10px);
+  }
+}
+
+@media (max-width: 360px) and (prefers-reduced-motion: no-preference) {
+  .intro {
+    top: calc(var(--header-h) + 0.65rem + env(safe-area-inset-top, 0px));
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 5.2svh, 2.2rem);
+  }
+
+  .note {
+    max-width: 210px;
+    font-size: clamp(0.7rem, 1.55svh, 0.8rem);
+  }
+
+  .panel {
+    padding-top: calc(
+      var(--header-h) + 1rem + clamp(2.5rem, 10svh, 4rem) +
+        env(safe-area-inset-top, 0px)
+    );
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .category {
+    margin-bottom: 7px;
+  }
+
+  .denseSkills {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(3px, 0.55svh, 6px);
+  }
+
+  .denseSkills .skill {
+    font-size: clamp(0.95rem, 3.2svh, 1.25rem);
+  }
+
+  .denseSkills .skill svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .subLabel {
+    margin-top: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   .section {
+    height: auto;
     min-height: 0;
-    padding: 82px clamp(22px, 8.3vw, 128px);
+    padding: 82px var(--container-pad);
+    overflow: visible;
+    touch-action: auto;
   }
 
   .intro {
@@ -180,30 +418,28 @@ html[data-red-intensity="subtle"] .skill svg {
     margin-bottom: 54px;
   }
 
-  .viewport,
-  .track {
-    min-height: 0;
+  .viewport {
+    height: auto;
     overflow: visible;
   }
 
   .track {
     width: 100%;
+    height: auto;
     flex-direction: column;
+    gap: 0;
+    padding: 0;
+    transform: none !important;
   }
 
   .panel {
     width: 100%;
+    height: auto;
     min-height: 320px;
     flex-basis: auto;
-    padding: 64px 8px 64px 0;
-    border-right: 0;
+    padding: 64px 8px;
     border-top: 1px solid var(--ink-20);
-  }
-
-  .number {
-    top: 28px;
-    right: 2%;
-    font-size: clamp(7rem, 32vw, 13rem);
+    border-right: 0;
   }
 
   .panelContent {
@@ -214,14 +450,7 @@ html[data-red-intensity="subtle"] .skill svg {
     font-size: clamp(3.4rem, 10vw, 6.5rem);
   }
 
-  .progress {
-    right: 0;
-    bottom: 22px;
-    left: 0;
-  }
-
-  .panelCount {
-    right: 0;
-    bottom: -7px;
+  .mobileAids {
+    display: none;
   }
 }

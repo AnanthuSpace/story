@@ -1,0 +1,378 @@
+.wrapper {
+  --drop-fill: var(--paper);
+  --drop-ink: var(--ink);
+  --drop-muted: var(--ink-60);
+  --drop-opposite: var(--ink);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 720px;
+  overflow: visible;
+  color: var(--drop-ink);
+}
+
+.wrapper[data-theme="obsidian"] {
+  --drop-fill: var(--ink);
+  --drop-ink: var(--paper);
+  --drop-muted: var(--paper-60);
+  --drop-opposite: var(--paper);
+}
+
+.blob {
+  position: absolute;
+  z-index: 0;
+  inset: -6% -4%;
+  transform: scale(1);
+  transform-origin: 50% 20%;
+  pointer-events: none;
+}
+
+.wrapper[data-entering="true"] .blob {
+  will-change: transform;
+  animation: drop-land 900ms var(--ease-reveal) both;
+}
+
+.wrapper[data-state="success"] .blob {
+  animation: splash 520ms var(--ease-reveal) both;
+}
+
+.wrapper[data-state="error"] .blob {
+  animation: shake 300ms ease-in-out both;
+}
+
+.shapeMotion {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+
+.wrapper[data-entered="true"] .shapeMotion {
+  animation: shape-wobble 7s ease-in-out infinite;
+}
+
+.desktopSvg,
+.mobileSvg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.mobileSvg {
+  display: none;
+}
+
+.shape {
+  opacity: 0;
+  fill: var(--drop-fill);
+}
+
+.variantA {
+  opacity: 1;
+}
+
+.depth {
+  fill: var(--accent-dark);
+}
+
+.front {
+  fill: var(--drop-fill);
+}
+
+.wrapper[data-entered="true"] .variantA {
+  animation: variant-a 7s ease-in-out infinite;
+}
+
+.wrapper[data-entered="true"] .variantB {
+  animation: variant-b 7s ease-in-out infinite;
+}
+
+.wrapper[data-entered="true"] .variantC {
+  animation: variant-c 7s ease-in-out infinite;
+}
+
+.droplet {
+  opacity: 0;
+  fill: var(--drop-fill);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.oppositeDroplet {
+  fill: var(--drop-opposite);
+}
+
+.wrapper[data-entering="true"] .droplet {
+  will-change: transform, opacity;
+  animation: droplet-land 520ms var(--ease-reveal) var(--fly-delay) both;
+}
+
+.wrapper[data-entered="true"] .droplet {
+  opacity: 1;
+}
+
+.wrapper[data-active="false"] .blob,
+.wrapper[data-active="false"] .shapeMotion,
+.wrapper[data-active="false"] .variantA,
+.wrapper[data-active="false"] .variantB,
+.wrapper[data-active="false"] .variantC,
+.wrapper[data-active="false"] .droplet {
+  animation-play-state: paused;
+}
+
+.wrapper[data-active="false"][data-entering="true"] .content {
+  animation-play-state: paused;
+}
+
+.wrapper[data-entering="true"] .content {
+  opacity: 0;
+  animation: form-reveal 500ms ease 620ms both;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: clamp(3rem, 9vw, 6rem) clamp(2.75rem, 8vw, 5.5rem);
+}
+
+.ripples {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  aspect-ratio: 1;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.ripples span {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--drop-ink);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.wrapper[data-state="success"] .ripples span {
+  animation: ripple 900ms ease-out both;
+}
+
+.wrapper[data-state="success"] .ripples span:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.wrapper[data-state="success"] .ripples span:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+@keyframes form-reveal {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes splash {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  16%,
+  50%,
+  84% {
+    transform: translateX(-6px);
+  }
+
+  33%,
+  67% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 0.45;
+    transform: scale(0.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(24);
+  }
+}
+
+@keyframes drop-land {
+  0% {
+    transform: translateY(-18px) scale(0.15, 1.25);
+  }
+
+  66% {
+    transform: translateY(0) scale(1.12, 0.88);
+  }
+
+  84% {
+    transform: scale(0.97, 1.03);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes droplet-land {
+  0% {
+    opacity: 0;
+    transform: translate(var(--fly-x), var(--fly-y)) scale(0);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1.18);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes shape-wobble {
+  0%,
+  100% {
+    transform: rotate(-0.6deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(0.6deg) scale(1.015);
+  }
+}
+
+@keyframes variant-a {
+  0%,
+  24%,
+  100% {
+    opacity: 1;
+  }
+
+  36%,
+  88% {
+    opacity: 0;
+  }
+}
+
+@keyframes variant-b {
+  0%,
+  20%,
+  100% {
+    opacity: 0;
+  }
+
+  34%,
+  54% {
+    opacity: 1;
+  }
+
+  66% {
+    opacity: 0;
+  }
+}
+
+@keyframes variant-c {
+  0%,
+  53%,
+  100% {
+    opacity: 0;
+  }
+
+  67%,
+  87% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 639px) {
+  .blob {
+    inset: -3% -2%;
+  }
+
+  .desktopSvg {
+    display: none;
+  }
+
+  .mobileSvg {
+    display: block;
+  }
+
+  .content {
+    padding: clamp(3rem, 9vw, 6rem) clamp(1.75rem, 7vw, 2.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob,
+  .shapeMotion,
+  .droplet,
+  .variantA,
+  .variantB,
+  .variantC,
+  .ripples span {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .shape {
+    opacity: 0;
+  }
+
+  .variantA {
+    opacity: 1;
+  }
+
+  .droplet {
+    opacity: 1;
+  }
+
+  .wrapper[data-visible="true"] .front.variantA,
+  .wrapper[data-visible="true"] .depth.variantA {
+    animation: reduced-fade 250ms ease both !important;
+  }
+
+  .wrapper[data-entering="true"] .content {
+    animation: none;
+    opacity: 1;
+  }
+
+  .wrapper[data-state="success"] .blob,
+  .wrapper[data-state="error"] .blob {
+    animation: reduced-fade 250ms ease both !important;
+  }
+}
+
+@keyframes reduced-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

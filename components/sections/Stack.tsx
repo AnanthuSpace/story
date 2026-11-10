@@ -4,7 +4,11 @@ import { useEffect, useRef } from "react";
 import { skillGroups } from "@/data/skills";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { TechIcon } from "@/components/ui/TechIcon";
+import { ArrowDown } from "lucide-react";
 import styles from "./Stack.module.css";
+
+const STACK_SNAP_MOBILE = false;
+const STACK_SCRUB_TOUCH = 1;
 
 const stackCategories = [
   "Languages",
@@ -33,66 +37,149 @@ const panelCopy: Record<(typeof stackCategories)[number], string> = {
 export function Stack() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
+  const counterRef = useRef<HTMLElement>(null);
+  const hintRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const desktop = window.matchMedia("(min-width: 900px)");
     if (!section || !track) return;
     let disposed = false;
-    let generation = 0;
-    let revertContext = () => {};
+    let resizeTimer: number | undefined;
+    let lastWidth = window.innerWidth;
+    let matchMedia:
+      | ReturnType<typeof import("gsap").default.matchMedia>
+      | undefined;
+    let gsapInstance: typeof import("gsap").default | undefined;
+    let scrollTrigger: typeof import("gsap/ScrollTrigger").default | undefined;
 
-    const syncLayout = async () => {
-      const currentGeneration = ++generation;
-      revertContext();
-      revertContext = () => {};
-      if (reducedMotion.matches || !desktop.matches) return;
+    const refreshOnWidthChange = () => {
+      if (resizeTimer !== undefined) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        resizeTimer = undefined;
+        if (window.innerWidth === lastWidth) return;
+        lastWidth = window.innerWidth;
+        scrollTrigger?.refresh();
+      }, 200);
+    };
+    const refreshAfterOrientationChange = () => {
+      lastWidth = window.innerWidth;
+      scrollTrigger?.refresh();
+    };
 
+    const initialize = async () => {
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
       ]);
 
-      if (
-        disposed ||
-        currentGeneration !== generation ||
-        !sectionRef.current ||
-        !trackRef.current
-      ) {
-        return;
-      }
+      if (disposed || !sectionRef.current || !trackRef.current) return;
 
+      gsapInstance = gsap;
+      scrollTrigger = ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
-      const context = gsap.context(() => {
-        gsap.to(track, {
+      ScrollTrigger.config({ ignoreMobileResize: true });
+
+      matchMedia = gsap.matchMedia(section);
+      matchMedia.add("(prefers-reduced-motion: no-preference)", () => {
+        const isTouch = window.matchMedia(
+          "(hover: none), (pointer: coarse)",
+        ).matches;
+        const panelCount = track.children.length;
+        const animation = gsap.to(track, {
           x: () => -(track.scrollWidth - window.innerWidth),
           ease: "none",
           scrollTrigger: {
+            id: "stack-horizontal",
             trigger: section,
             pin: true,
-            scrub: 1,
+            pinSpacing: true,
+            scrub: isTouch ? STACK_SCRUB_TOUCH : 0.6,
+            anticipatePin: 1,
             start: "top top",
             end: () => `+=${track.scrollWidth - window.innerWidth}`,
             invalidateOnRefresh: true,
+            ...(isTouch && STACK_SNAP_MOBILE
+              ? {
+                  snap: {
+                    snapTo: 1 / Math.max(1, panelCount - 1),
+                    duration: 0.3,
+                    ease: "power1.inOut",
+                  },
+                }
+              : {}),
+            onToggle: (self) => {
+              track.style.willChange = self.isActive ? "transform" : "";
+            },
+            onUpdate: (self) => {
+              if (progressRef.current) {
+                progressRef.current.style.transform = `scaleX(${self.progress})`;
+              }
+              if (counterRef.current) {
+                const current = Math.min(
+                  panelCount,
+                  Math.max(1, Math.round(self.progress * (panelCount - 1)) + 1),
+                );
+                counterRef.current.textContent = `${String(current).padStart(2, "0")} / ${String(panelCount).padStart(2, "0")}`;
+              }
+              if (hintRef.current) {
+                hintRef.current.style.opacity =
+                  self.progress >= 0.05 ? "0" : "1";
+              }
+            },
           },
         });
-      }, section);
 
-      revertContext = () => context.revert();
+        return () => {
+          animation.scrollTrigger?.kill();
+          gsap.set(track, { clearProps: "transform,willChange" });
+        };
+      });
+
+      window.addEventListener("resize", refreshOnWidthChange, {
+        passive: true,
+      });
+      window.addEventListener(
+        "orientationchange",
+        refreshAfterOrientationChange,
+        { passive: true },
+      );
+
+      void document.fonts?.ready.then(() => {
+        if (!disposed) ScrollTrigger.refresh();
+      });
+
       ScrollTrigger.refresh();
     };
 
-    void syncLayout();
-    desktop.addEventListener("change", syncLayout);
-    reducedMotion.addEventListener("change", syncLayout);
+    void initialize();
+
     return () => {
       disposed = true;
-      generation += 1;
-      desktop.removeEventListener("change", syncLayout);
-      reducedMotion.removeEventListener("change", syncLayout);
-      revertContext();
+      window.removeEventListener("resize", refreshOnWidthChange);
+      window.removeEventListener(
+        "orientationchange",
+        refreshAfterOrientationChange,
+      );
+      if (resizeTimer !== undefined) window.clearTimeout(resizeTimer);
+      matchMedia?.revert();
+      scrollTrigger
+        ?.getAll()
+        .filter((trigger) => trigger.vars.id === "stack-horizontal")
+        .forEach((trigger) => trigger.kill());
+      if (gsapInstance) {
+        gsapInstance.set(track, { clearProps: "transform,willChange" });
+      } else {
+        track.style.removeProperty("transform");
+        track.style.removeProperty("will-change");
+      }
+
+      const spacer = section.parentElement;
+      if (spacer?.classList.contains("pin-spacer") && spacer.parentElement) {
+        spacer.parentElement.insertBefore(section, spacer);
+        spacer.remove();
+      }
     };
   }, []);
 
@@ -119,13 +206,32 @@ export function Stack() {
             if (!group) return null;
 
             return (
-              <article className={styles.panel} key={category}>
+              <article
+                className={`${styles.panel} ${
+                  category === "Frontend" ||
+                  category === "Backend & Real-Time" ||
+                  category === "Testing & Tooling" ||
+                  category === "AI Development Tools"
+                    ? styles.densePanel
+                    : ""
+                }`}
+                key={category}
+              >
                 <span className={styles.number} aria-hidden="true">
                   0{index + 1}
                 </span>
                 <div className={styles.panelContent}>
                   <p className={`${styles.category} eyebrow`}>{category}</p>
-                  <h3 className={styles.skills}>
+                  <h3
+                    className={`${styles.skills} ${
+                      category === "Frontend" ||
+                      category === "Backend & Real-Time" ||
+                      category === "Testing & Tooling" ||
+                      category === "AI Development Tools"
+                        ? styles.denseSkills
+                        : ""
+                    }`}
+                  >
                     {group.skills.map((skill) => (
                       <span className={styles.skill} key={skill}>
                         <TechIcon name={skill} size={26} />
@@ -144,6 +250,20 @@ export function Stack() {
               </article>
             );
           })}
+        </div>
+      </div>
+      <div className={styles.mobileAids} aria-hidden="true">
+        <p className={styles.hint} ref={hintRef}>
+          <ArrowDown size={14} strokeWidth={1.75} />
+          <span>Swipe up to explore</span>
+        </p>
+        <div className={styles.scrollProgress}>
+          <span className={styles.scrollProgressTrack}>
+            <span ref={progressRef} />
+          </span>
+          <span className={styles.scrollCounter} ref={counterRef}>
+            01 / 09
+          </span>
         </div>
       </div>
     </section>
