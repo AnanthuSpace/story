@@ -37,7 +37,7 @@ export const experience: ExperienceRole[] = [
     ],
   },
   {
-    title: "CTO & Partner",
+    title: "CTO & Designated Partner",
     company: "Veevity Technologies LLP",
     dateRange: "Sep 2025 - Present",
     sortStart: "2026-09",

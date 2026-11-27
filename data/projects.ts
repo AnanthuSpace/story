@@ -34,7 +34,7 @@ export const projects: Project[] = [
     links: [
       {
         label: "Live Demo",
-        href: "https://paradox-esports.vercel.app",
+        href: "https://paradox-phi.vercel.app/",
         kind: "live",
       },
       {
@@ -43,7 +43,7 @@ export const projects: Project[] = [
         kind: "source",
       },
     ],
-    liveUrl: "https://paradox-esports.vercel.app",
+    liveUrl: "https://paradox-phi.vercel.app/",
     sourceUrl: "https://github.com/AnanthuSpace",
   },
   {
