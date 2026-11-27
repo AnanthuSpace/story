@@ -104,6 +104,16 @@
   overflow-wrap: anywhere;
 }
 
+@media (min-width: 900px) {
+  .panelContent {
+    transform: translateY(clamp(56px, 12svh, 128px));
+  }
+
+  .skills {
+    font-size: clamp(4rem, 9.5svh, 10rem);
+  }
+}
+
 .skill {
   display: inline-flex;
   min-width: 0;

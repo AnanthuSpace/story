@@ -111,9 +111,9 @@ export function Hero() {
         <div className={styles.bottom}>
           <div>
             <p className={styles.intro}>
-              CTO &amp; Partner at Veevity Technologies LLP. I build production
-              web apps with Next.js, NestJS and TypeScript, bringing 2+ years of
-              experience and contributions to 15+ projects.
+              CTO &amp; Designated Partner at Veevity Technologies LLP. I build
+              production web apps with Next.js, NestJS and TypeScript, bringing
+              2+ years of experience and contributions to 15+ projects.
             </p>
             <p className={styles.roleLine} aria-live="polite">
               <AnimatePresence mode="wait" initial={false}>
